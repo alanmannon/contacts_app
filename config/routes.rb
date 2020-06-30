@@ -14,4 +14,8 @@ Rails.application.routes.draw do
   namespace :api do
     get "/all_contacts" => "contacts#all_contacts"
   end
+
+  namespace :api do
+    get "/definative_list" => "contacts#definative_list"
+  end
 end
