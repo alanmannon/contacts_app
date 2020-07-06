@@ -1,18 +1,40 @@
 class Api::ContactsController < ApplicationController
-  def contact_1
-    @contact_1 = Contact.first
-    render "contact_1.json.jb"
+  def index
+    @contacts = Contact.all
+    render "index.json.jb"
   end
 
-  def all_contacts
-    @all_contacts = Contact.all
-    render "all_contacts.json.jb"
+  def show
+    @contact = Contact.find_by(id: params[:id])
+    render "show.json.jb"
   end
 
-  def definative_list
-    @contact_1 = Contact.first
-    @contact_2 = Contact.second
-    @contact_3 = Contact.third
-    render "definative_list.json.jb"
+  def create
+    @contact = Contact.new(
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      email: params[:email],
+      phone_number: params[:phone_number],
+    )
+    @contact.save
+    render "show.json.jb"
+  end
+
+  def update
+    @contact = Contact.find_by(id: params[:id])
+    @contact.update(
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      email: params[:email],
+      phone_number: params[:phone_number],
+    )
+    @contact.save
+    render "show.json.jb"
+  end
+
+  def destroy
+    @contact = Contact.find_by(id: params[:id])
+    @contact.destroy
+    render json: { message: "contact deleted" }
   end
 end

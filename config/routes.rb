@@ -8,14 +8,10 @@ Rails.application.routes.draw do
   # end
 
   namespace :api do
-    get "/contact1" => "contacts#contact_1"
-  end
-
-  namespace :api do
-    get "/all_contacts" => "contacts#all_contacts"
-  end
-
-  namespace :api do
-    get "/definative_list" => "contacts#definative_list"
+    get "/contacts" => "contacts#index"
+    get "/contacts/:id" => "contacts#show"
+    post "/contacts" => "contacts#create"
+    patch "/contacts/:id" => "contacts#update"
+    delete "/contacts/:id" => "contacts#destroy"
   end
 end
