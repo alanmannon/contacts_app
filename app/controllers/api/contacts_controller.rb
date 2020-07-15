@@ -1,12 +1,16 @@
 class Api::ContactsController < ApplicationController
   def index
-    @contacts = Contact.all
+    @contacts = current_user.contacts
     render "index.json.jb"
   end
 
   def show
     @contact = Contact.find_by(id: params[:id])
-    render "show.json.jb"
+    if current_user && current_user.id == @contact.user_id
+      render "show.json.jb"
+    else
+      render json: { error: "please login" }
+    end
   end
 
   def create
@@ -15,8 +19,10 @@ class Api::ContactsController < ApplicationController
       last_name: params[:last_name],
       email: params[:email],
       phone_number: params[:phone_number],
+      user_id: current_user.id,
     )
-    @contact.save
+    if @contact.save
+    end
     render "show.json.jb"
   end
 
